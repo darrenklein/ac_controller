@@ -12,12 +12,14 @@ This app uses *httplib2*. To install dependencies, run
 pip3 install -r requirements.txt
 ```
 
-### Credentials
+### secret.py
 
-This app gathers local weather information from *OpenWeatherMap*, which requires an API key. Include this value in a .gitignored file named `credentials.py`; for example:
+This app gathers local weather information from *OpenWeatherMap*, which requires an API key. Include this value in a .gitignored file named `secret.py`, along with latitude/longitude coordinates for the desired location. For example:
 
 ```python
 api_key = 'key_here'
+latitude = 30.5
+longitude = -75.0
 ```
 
 ## Use
