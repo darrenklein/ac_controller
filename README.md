@@ -29,3 +29,11 @@ Start the app running
 ```bash
 python 3 main.py
 ```
+
+### Settings
+
+You can customize the behavior a bit with the values in the `settings.py` file.
+
+`sleep_period` will change how frequently the script checks the local temperature.
+
+`temp_threshold` is the value above which a certain behavior (in this case, turning on my air conditioner) should take place.

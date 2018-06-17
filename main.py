@@ -1,6 +1,16 @@
 import httplib2
 import json
+import sys
+import time
+from datetime import datetime
+import settings
 import secret
+
+def toggle_ac(command):
+    if command == 'on':
+        print('Turning AC on...')
+    else:
+        print('Turning AC off...')
 
 # The weather data is received as a bytestring
 def decode_and_parse_data(raw_data):
@@ -13,17 +23,33 @@ def convert_k_to_f(temp_k):
 
 # Get the temperature from the decoded data.
 def get_temp(data):
-    temp_k = decode_and_parse_data(raw_data)['main']['temp']
+    temp_k = data['main']['temp']
     return convert_k_to_f(temp_k)
 
 # Get local weather data
-def execute():
+def fetch_data():
     h = httplib2.Http()
     resp_headers, raw_data = h.request(f'http://api.openweathermap.org/data/2.5/weather?lat={secret.latitude}&lon={secret.longitude}&APPID={secret.api_key}', 'GET')
     return raw_data
 
+def execute():
+    while 1:
+        print('Checking local weather data...')
+        raw_data = fetch_data()
+        data = decode_and_parse_data(raw_data)
+        temp = get_temp(data)
+        print(f'Temperature at {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} is {temp} degrees Fahrenheit.')
+
+        if temp >= settings.temp_threshold:
+            toggle_ac('on')
+        else:
+            toggle_ac('off')
+
+        time.sleep(settings.sleep_period)
+
 if __name__ == '__main__':
-    raw_data = execute()
-    data = decode_and_parse_data(raw_data)
-    temp = get_temp(data)
-    print(temp)
+    try:
+        execute()
+    except KeyboardInterrupt:
+        print >> sys.stderr, '\nExiting by user request.\n'
+        sys.exit(0)
