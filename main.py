@@ -6,11 +6,23 @@ from datetime import datetime
 import settings
 import secret
 
-def toggle_ac(command):
-    if command == 'on':
-        print('Turning AC on...')
+# AC turned off by default
+ac_on = False
+
+# Depending on the temperature and current state of the AC, turn it on/off or leave it on/off.
+def toggle_ac(temp):
+    global ac_on
+
+    if temp >= settings.temp_threshold and ac_on == False:
+        ac_on = True
+        print('Temp above threshold, turning AC on...')
+    elif temp >= settings.temp_threshold and ac_on == True:
+        print('Temp above threshold, keeping AC on...')
+    elif temp < settings.temp_threshold and ac_on == True:
+        ac_on = False
+        print('Temp below threshold, turning AC off...')
     else:
-        print('Turning AC off...')
+        print('Temp below threshold, keeping AC off...')
 
 # The weather data is received as a bytestring
 def decode_and_parse_data(raw_data):
@@ -39,12 +51,7 @@ def execute():
         data = decode_and_parse_data(raw_data)
         temp = get_temp(data)
         print('Temperature at {now} is {temp} degrees Fahrenheit.'.format(now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),temp=temp))
-
-        if temp >= settings.temp_threshold:
-            toggle_ac('on')
-        else:
-            toggle_ac('off')
-
+        toggle_ac(temp)
         time.sleep(settings.sleep_period)
 
 if __name__ == '__main__':
