@@ -29,7 +29,7 @@ def get_temp(data):
 # Get local weather data
 def fetch_data():
     h = httplib2.Http()
-    resp_headers, raw_data = h.request(f'http://api.openweathermap.org/data/2.5/weather?lat={secret.latitude}&lon={secret.longitude}&APPID={secret.api_key}', 'GET')
+    resp_headers, raw_data = h.request('http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&APPID={api_key}'.format(latitude=secret.latitude,longitude=secret.longitude,api_key=secret.api_key), 'GET')
     return raw_data
 
 def execute():
@@ -38,7 +38,7 @@ def execute():
         raw_data = fetch_data()
         data = decode_and_parse_data(raw_data)
         temp = get_temp(data)
-        print(f'Temperature at {datetime.now().strftime("%Y-%m-%d %H:%M:%S")} is {temp} degrees Fahrenheit.')
+        print('Temperature at {now} is {temp} degrees Fahrenheit.'.format(now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),temp=temp))
 
         if temp >= settings.temp_threshold:
             toggle_ac('on')
