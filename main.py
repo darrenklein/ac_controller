@@ -41,12 +41,13 @@ def get_temp(data):
 # Get local weather data
 def fetch_data():
     h = httplib2.Http()
-    resp_headers, raw_data = h.request('http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&APPID={api_key}'.format(latitude=secret.latitude,longitude=secret.longitude,api_key=secret.api_key), 'GET')
+    resp_headers, raw_data = h.request('http://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&APPID={api_key}'.format(latitude=secret.latitude,
+                                                                                                                                              longitude=secret.longitude,
+                                                                                                                                              api_key=secret.api_key), 'GET')
     return raw_data
 
 def execute():
     while 1:
-        print('Checking local weather data...')
         raw_data = fetch_data()
         data = decode_and_parse_data(raw_data)
         temp = get_temp(data)
