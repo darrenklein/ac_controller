@@ -1,3 +1,4 @@
+import RPi.GPIO as GPIO
 import httplib2
 import json
 import sys
@@ -6,21 +7,23 @@ from datetime import datetime
 import settings
 import secret
 
-# AC turned off by default
-ac_on = False
+# Set the GPIO mode to use the board numbers
+GPIO.setmode(GPIO.BOARD)
+# Setting the GPIO output pin to 16
+pin = 16
+# Initialize the pin to be turned off
+GPIO.setup(pin, GPIO.OUT, initial=0)
 
 # Depending on the temperature and current state of the AC, turn it on/off or leave it on/off.
 def toggle_ac(temp):
-    global ac_on
-
-    if temp >= settings.temp_threshold and ac_on == False:
-        ac_on = True
+    if temp >= settings.temp_threshold and GPIO.input(pin) == 0:
         print('Temp above threshold, turning AC on...')
-    elif temp >= settings.temp_threshold and ac_on == True:
+        GPIO.output(pin, 1)
+    elif temp >= settings.temp_threshold and GPIO.input(pin) == 1:
         print('Temp above threshold, keeping AC on...')
-    elif temp < settings.temp_threshold and ac_on == True:
-        ac_on = False
+    elif temp < settings.temp_threshold and GPIO.input(pin) == 1:
         print('Temp below threshold, turning AC off...')
+        GPIO.output(pin, 0)
     else:
         print('Temp below threshold, keeping AC off...')
 
@@ -47,7 +50,7 @@ def fetch_data():
     return raw_data
 
 def execute():
-    while 1:
+    while True:
         raw_data = fetch_data()
         data = decode_and_parse_data(raw_data)
         temp = get_temp(data)
@@ -59,5 +62,6 @@ if __name__ == '__main__':
     try:
         execute()
     except KeyboardInterrupt:
-        print >> sys.stderr, '\nExiting by user request.\n'
+        print('Exiting...')
+        GPIO.cleanup()
         sys.exit(0)

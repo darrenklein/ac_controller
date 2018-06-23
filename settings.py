@@ -1,2 +1,2 @@
-sleep_period = 600 # How frequently temp is checked
-temp_threshold = 80.0 # The temperature above which the AC should be turned on
+sleep_period = 600 # How frequently temp is checked - every 10 minutes, in this case.
+temp_threshold = 75.0 # The temperature (Fahrenheit) above which the AC should be turned on.

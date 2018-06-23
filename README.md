@@ -22,6 +22,12 @@ latitude = 30.5
 longitude = -75.0
 ```
 
+### GPIO/Breadboard
+
+This is a very basic IOT setup - ultimately, this isn't controlling the air conditioner directly, but rather is controlling a relay - I'm using the AC/DC controllable relay put out by Digital Loggers - https://dlidirect.com/products/iot-power-relay
+
+Connect the relay's negative terminal with a male-to-male jumper to any ground pin - I'm using pin 6. Then connect the positive terminal with a male-to-male jumper to a GPIO pin - in my code, I'm using pin 16.
+
 ## Use
 
 Start the app running
@@ -29,6 +35,10 @@ Start the app running
 ```bash
 python 3 main.py
 ```
+
+### Screen
+
+To allow this app to run perpetually in headless mode, I installed GNU Screen - https://www.gnu.org/software/screen/ on my Raspberry Pi 3 B+.
 
 ### Settings
 
