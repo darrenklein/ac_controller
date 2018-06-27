@@ -92,6 +92,9 @@ class ACRelay:
         self.is_on = False
         return GPIO.output(ac_relay_pin, 0)
 
+    def __init__(self, is_on):
+        self.is_on = is_on
+
 
 
 # The thermometer returns temperature in Celsius - convert to Fahrenheit.
@@ -103,7 +106,7 @@ def get_temp():
     return convert_c_to_f(30)
 
 def execute():
-    ac_relay = ACRelay()
+    ac_relay = ACRelay(False)
     while True:
         temp = get_temp()
         if temp >= ac_relay.upper_threshold and ac_relay.is_on == False:
