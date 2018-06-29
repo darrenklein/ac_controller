@@ -2,11 +2,11 @@
 class Relay:
     def turn_on(self):
         self.is_on = True
-        # return GPIO.output(self.gpio_pin, 1)
+        return GPIO.output(self.gpio_pin, 1)
 
     def turn_off(self):
         self.is_on = False
-        # return GPIO.output(self.gpio_pin, 0)
+        return GPIO.output(self.gpio_pin, 0)
 
     def __init__(self):
         self.gpio_pin = 16

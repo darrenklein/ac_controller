@@ -68,12 +68,12 @@
 import RPi.GPIO as GPIO
 import sys
 import time
-from relay import Relay
-from thermometer import Thermometer
+from lib.relay import Relay
+from lib.thermometer import Thermometer
 
 # Set the GPIO mode to use the board numbers
 GPIO.setmode(GPIO.BOARD)
-Initialize the AC relay pin to be turned off
+# Initialize the AC relay pin to be turned off
 GPIO.setup(ac_relay_pin, GPIO.OUT, initial=0)
 
 # After turning the relay on or maintaining current status, sleep this period
