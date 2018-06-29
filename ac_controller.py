@@ -59,70 +59,47 @@
 #         time.sleep(settings.sleep_period)
 
 
+
+
+
+
+
+
 import RPi.GPIO as GPIO
 import sys
 import time
+from relay import Relay
+from thermometer import Thermometer
 
 # Set the GPIO mode to use the board numbers
-# GPIO.setmode(GPIO.BOARD)
-# Setting the GPIO output pin for the AC relay
-ac_relay_pin = 16
-# Initialize the AC relay pin to be turned off
-# GPIO.setup(ac_relay_pin, GPIO.OUT, initial=0)
+GPIO.setmode(GPIO.BOARD)
+Initialize the AC relay pin to be turned off
+GPIO.setup(ac_relay_pin, GPIO.OUT, initial=0)
 
-class ACRelay:
-    """The air conditioner... or, more specifically, the controllable relay that the AC is plugged into."""
-    # If the temp goes above the upper threshold, turn on the unit. If it goes below the
-    # lower threshold, turn it off. Leave a buffer in between, so that it won't quickly turn
-    # itself back off.
-    # TODO: performance-tune this.
-    upper_threshold = 75.0
-    lower_threshold = 73.0
+# After turning the relay on or maintaining current status, sleep this period
+# before checking the temperature again.
+period = 30
 
-    is_on = False
-    # According the the AC unit in use, if it has been turned off, wait three minutes
-    # before attempting to turn it back on.
-    reset_period = 180
-
-    def turn_on(self):
-        self.is_on = True
-        return GPIO.output(ac_relay_pin, 1)
-
-    def turn_off(self):
-        self.is_on = False
-        return GPIO.output(ac_relay_pin, 0)
-
-    def __init__(self, is_on):
-        self.is_on = is_on
-
-
-
-# The thermometer returns temperature in Celsius - convert to Fahrenheit.
-def convert_c_to_f(temp_c):
-    return (temp_c * 1.8) + 32
-
-# Get the ambient temperature from the thermometer.
-def get_temp():
-    return convert_c_to_f(30)
-
-def execute():
-    ac_relay = ACRelay(False)
+def execute(relay, thermometer):
     while True:
-        temp = get_temp()
-        if temp >= ac_relay.upper_threshold and ac_relay.is_on == False:
+        temp = thermometer.get_temp()
+        if temp >= relay.upper_threshold and relay.is_on == False:
             print("Turning unit on...")
-            ac_relay.turn_on()
-        elif temp < ac_relay.lower_threshold:
+            relay.turn_on()
+            time.sleep(period)
+        elif temp < relay.lower_threshold:
             print("Turning unit off...")
-            ac_relay.turn_off()
-            time.sleep(ac_relay.reset_period)
+            relay.turn_off()
+            time.sleep(relay.reset_period)
         else:
             print("Maintaining current status...")
-            continue
+            time.sleep(period)
 
 if __name__ == '__main__':
     try:
-        execute()
+        relay = Relay()
+        thermometer = Thermometer()
+        execute(relay, thermometer)
     except KeyboardInterrupt:
         print('Exiting...')
         GPIO.cleanup()
