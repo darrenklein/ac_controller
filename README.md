@@ -1,36 +1,33 @@
 # AC Controller
+> A Python Raspberry Pi thermostat for an analog air conditioner.
 
-A simple Python app for Raspberry Pi, intended to turn on my air conditioner if it gets too hot.
+This is a very basic IOT setup - the script turns a relay on or off (or leaves it on/off) based on temperature thresholds. Do with it what you will, I plugged an air conditioner into it.
+
+Super big thanks to the folks at Adafruit for their great temperature sensing guide - (https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf)[https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf]
 
 ## Setup
 
-### Install Dependencies
+### Hardware
 
-This app uses *httplib2*. To install dependencies, run
+- **Raspberry Pi** - I used a Pi Zero W 
+- **DS18B20 Temperature sensor w/ 4.7k resistor** - (https://www.adafruit.com/product/381)[https://www.adafruit.com/product/381]
+- **Controllable relay** - I used (https://dlidirect.com/products/iot-power-relay)[https://dlidirect.com/products/iot-power-relay]
+- **Breadboard and associated hardware (breakout kit)**
+- **5 male-to-male jumper cables**
 
-```bash
-pip3 install -r requirements.txt
-```
+### Put it all together now...
 
-### secret.py
+#### DS18B20
 
-This app gathers local weather information from *OpenWeatherMap*, which requires an API key. Include this value in a .gitignored file named `secret.py`, along with latitude/longitude coordinates for the desired location. For example:
+To set up the temperature sensor, follow the instructions at (https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf)[https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf] to wire up the breadboard and add OneWire support to your Pi.
 
-```python
-api_key = 'key_here'
-latitude = 30.5
-longitude = -75.0
-```
+#### Relay
 
-### GPIO/Breadboard
-
-This is a very basic IOT setup - ultimately, this isn't controlling the air conditioner directly, but rather is controlling a relay - I'm using the AC/DC controllable relay put out by Digital Loggers - https://dlidirect.com/products/iot-power-relay
-
-Connect the relay's negative terminal with a male-to-male jumper to any ground pin - I'm using pin 6. Then connect the positive terminal with a male-to-male jumper to a GPIO pin - in my code, I'm using pin 16.
+Connect the relay's negative terminal with a male-to-male jumper to any ground pin - I used pin 6. Then connect the positive terminal with a male-to-male jumper to GPIO pin number 16.
 
 ## Use
 
-Start the app running
+Start the app with
 
 ```bash
 python 3 main.py
@@ -38,12 +35,10 @@ python 3 main.py
 
 ### Screen
 
-To allow this app to run perpetually in headless mode, I installed GNU Screen - https://www.gnu.org/software/screen/ on my Raspberry Pi 3 B+.
+To allow this app to run perpetually in headless mode, I installed GNU Screen - https://www.gnu.org/software/screen/ on my Pi.
 
-### Settings
+## Next steps...
 
-You can customize the behavior a bit with the values in the `settings.py` file.
+I'd like to provide a simple user interface that would allow a person to manually turn the relay on/off and set different temperature ranges, etc.
 
-`sleep_period` will change how frequently the script checks the local temperature.
-
-`temp_threshold` is the value above which a certain behavior (in this case, turning on my air conditioner) should take place.
+I'm also planning to rebuild this app using Elixir Nerves.
