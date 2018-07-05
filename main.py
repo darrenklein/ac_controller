@@ -23,7 +23,7 @@ def execute(relay, temp_sensor):
             print("Turning unit on...")
             relay.turn_on()
             time.sleep(period)
-        elif temp < relay.lower_threshold:
+        elif temp < relay.lower_threshold and relay.is_of == False:
             print("Turning unit off...")
             relay.turn_off()
             # In this case, sleep for a manufacturer-specified reset period for the AC unit. Not all units may have such a recommendation.
