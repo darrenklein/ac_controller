@@ -16,8 +16,8 @@ class Relay:
         # lower threshold, turn it off. Leave a buffer in between, so that it won't quickly turn
         # itself back off.
         # TODO: performance-tune this.
-        self.upper_threshold = 75.00
-        self.lower_threshold = 73.00
+        self.upper_threshold = 76.00
+        self.lower_threshold = 75.00
         # According the the AC unit in use, if it has been turned off, wait three minutes
         # before attempting to turn it back on.
         self.reset_period = 180

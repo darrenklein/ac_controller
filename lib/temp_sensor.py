@@ -1,4 +1,4 @@
-""" A class representing the thermometer """
+""" A class representing the temperature sensor """
 import os
 import glob
 import time
@@ -9,7 +9,7 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 
-class Thermometer:
+class TempSensor:
 	def read_temp_raw(self):
 		f = open(device_file, 'r')
 		lines = f.readlines()
@@ -27,4 +27,3 @@ class Thermometer:
 			temp_c = float(temp_string) / 1000.0
 			temp_f = temp_c * 9.0 / 5.0 + 32.0
 			return temp_f
-
