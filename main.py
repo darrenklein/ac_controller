@@ -33,7 +33,7 @@ def execute(relay, temp_sensor):
 if __name__ == '__main__':
     try:
         relay = Relay(relay_pin)
-        temp_sensor = temp_sensor()
+        temp_sensor = TempSensor()
         execute(relay, temp_sensor)
     except KeyboardInterrupt:
         print('Exiting...')
