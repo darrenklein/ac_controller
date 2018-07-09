@@ -6,14 +6,12 @@ from lib.relay import Relay
 from lib.temp_sensor import TempSensor
 
 relay_pin = 16
+# After turning the relay on or maintaining current status, sleep this period before checking the temperature again
+period = 30
 # Set the GPIO mode to use the board numbers
 GPIO.setmode(GPIO.BOARD)
 # Initialize the AC relay pin in the off state
 GPIO.setup(relay_pin, GPIO.OUT, initial=0)
-
-# After turning the relay on or maintaining current status, sleep this period
-# before checking the temperature again.
-period = 30
 
 def execute(relay, temp_sensor):
     while True:
