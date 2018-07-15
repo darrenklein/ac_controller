@@ -12,8 +12,8 @@ period = 30
 GPIO.setmode(GPIO.BOARD)
 # Initialize the AC relay pin in the off state
 GPIO.setup(relay_pin, GPIO.OUT, initial=0)
-upper_threshold = 79.00
-lower_threshold = 78.00
+upper_threshold = 80.00
+lower_threshold = 79.00
 
 def execute(relay, temp_sensor):
     while True:
