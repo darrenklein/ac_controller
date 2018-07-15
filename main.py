@@ -12,22 +12,24 @@ period = 30
 GPIO.setmode(GPIO.BOARD)
 # Initialize the AC relay pin in the off state
 GPIO.setup(relay_pin, GPIO.OUT, initial=0)
+upper_threshold = 77.00
+lower_threshold = 76.00
 
 def execute(relay, temp_sensor):
     while True:
         temp = temp_sensor.get_temp()
         print('Temperature at {now} is {temp} degrees Fahrenheit.'.format(now=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),temp=temp))
-        if temp >= relay.upper_threshold and relay.is_on == False:
+        if temp >= upper_threshold and relay.is_on == False:
             print("Turning unit on...")
             relay.turn_on()
             time.sleep(period)
-        elif temp < relay.lower_threshold and relay.is_on == False:
-            print("Turning unit off...")
+        elif temp < lower_threshold and relay.is_on == True:
+            print('Turning unit off...')
             relay.turn_off()
             # In this case, sleep for a manufacturer-specified reset period for the AC unit. Not all units may have such a recommendation.
             time.sleep(relay.reset_period)
         else:
-            print("Maintaining current status...")
+            print('Maintaining current status...')
             time.sleep(period)
 
 if __name__ == '__main__':
