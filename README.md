@@ -3,15 +3,15 @@
 
 This is a very basic IOT setup - the script turns a relay on or off (or leaves it on/off) based on temperature thresholds. Do with it what you will, I plugged an air conditioner into it.
 
-Super big thanks to the folks at Adafruit for their great temperature sensing guide - (https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf)[https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf]
+Super big thanks to the folks at Adafruit for their great temperature sensing guide - https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf
 
 ## Setup
 
 ### Hardware
 
 - **Raspberry Pi** - I used a Pi Zero W 
-- **DS18B20 Temperature sensor w/ 4.7k resistor** - (https://www.adafruit.com/product/381)[https://www.adafruit.com/product/381]
-- **Controllable relay** - I used (https://dlidirect.com/products/iot-power-relay)[https://dlidirect.com/products/iot-power-relay]
+- **DS18B20 Temperature sensor w/ 4.7k resistor** - https://www.adafruit.com/product/381
+- **Controllable relay** - I used https://dlidirect.com/products/iot-power-relay
 - **Breadboard and associated hardware (breakout kit)**
 - **5 male-to-male jumper cables**
 
@@ -19,7 +19,7 @@ Super big thanks to the folks at Adafruit for their great temperature sensing gu
 
 #### DS18B20
 
-To set up the temperature sensor, follow the instructions at (https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf)[https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf] to wire up the breadboard and add OneWire support to your Pi.
+To set up the temperature sensor, follow the instructions at https://cdn-learn.adafruit.com/downloads/pdf/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing.pdf to wire up the breadboard and add OneWire support to your Pi.
 
 #### Relay
 
