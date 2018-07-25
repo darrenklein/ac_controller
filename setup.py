@@ -2,6 +2,6 @@ from distutils.core import setup
 
 setup(
     name='AC_Controller',
-    version='0.1dev',
+    version='1.0.0',
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
 )
